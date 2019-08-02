@@ -3,7 +3,10 @@ import * as React from 'react';
 const { useState, useEffect } = React;
 
 const usePersistedState = (defaultState, key) => {
-    const [value, setValue] = useState(defaultState);
+    const restored = localStorage.getItem(key);
+    const [value, setValue] = useState(
+        restored ? JSON.parse(restored) : defaultState
+    );
 
     const setValueInStorage = x => {
         const newValue = typeof x === "function"
